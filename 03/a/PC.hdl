@@ -16,5 +16,14 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    // Find out + 1
+    Inc16(in=feedback, out=feedbackinc);
+
+    // Chose between modes
+    Mux16(a=feedback, b=feedbackinc, sel=inc, out=out1);
+    Mux16(a=out1, b=in, sel=load, out=out2);
+    Mux16(a=out2, b=false, sel=reset, out=out3);
+
+    // load into reg
+    Register(in=out3, load=true, out=out, out=feedback);
 }
